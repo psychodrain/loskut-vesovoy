@@ -7,7 +7,6 @@
     <!-- Подключаем Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Стили для страницы */
         * {
             margin: 0;
             padding: 0;
@@ -24,15 +23,21 @@
             background: #000;
         }
 
-        /* ВИДЕО ФОН */
-        #bg-video {
+        /* YouTube плеер на весь экран */
+        #youtube-player {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
             z-index: 0;
+            pointer-events: none;
+        }
+
+        #youtube-player iframe {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
         /* Затемнение */
@@ -179,10 +184,9 @@
     </style>
 </head>
 <body>
-    <!-- ВИДЕО ФОН - ТВОЕ ВИДЕО С GOOGLE DRIVE -->
-    <video id="bg-video" autoplay loop muted playsinline>
-        <!-- ПРЯМАЯ ССЫЛКА НА ТВОЕ ВИДЕО (преобразованная) -->
-        <source src="https://drive.google.com/uc?export=download&id=1cotCQIfPxUcdqeiwXODd4IvXYNTPBG3M" type="video/mp4">
+    <!-- YouTube плеер -->
+    <div id="youtube-player"></div>
+
     <!-- Затемнение -->
     <div class="overlay"></div>
 
@@ -214,54 +218,116 @@
         </div>
     </div>
 
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
     <script>
-        // Простой скрипт для кнопки звука
-        const video = document.getElementById('bg-video');
-        const soundButton = document.getElementById('soundToggle');
-        const soundIcon = document.getElementById('soundIcon');
+        // Глобальные переменные
+        let player;
+        let isMuted = true;
+        let soundButton = document.getElementById('soundToggle');
+        let soundIcon = document.getElementById('soundIcon');
         
-        let isMuted = true; // Начинаем с выключенным звуком
-        
-        // Убедимся что видео загружено
-        video.addEventListener('loadeddata', function() {
-            console.log('✅ Видео загружено');
-            video.muted = true; // Звук выключен по умолчанию
-        });
-        
-        video.addEventListener('error', function(e) {
-            console.log('❌ Ошибка загрузки видео:', e);
-            // Если видео не грузится, попробуем резервное
-            video.src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
-        });
-        
-        // Обработка клика по кнопке
-        soundButton.addEventListener('click', function() {
-            console.log('👆 Кнопка нажата');
+        // Функция вызывается YouTube API когда готов
+        function onYouTubeIframeAPIReady() {
+            console.log('🎬 YouTube API готов');
             
-            if (isMuted) {
-                // Включаем звук
-                video.muted = false;
-                video.volume = 0.5; // Громкость 50%
-                soundIcon.className = 'fas fa-volume-high';
-                console.log('🔊 Звук включен');
-                isMuted = false;
-            } else {
-                // Выключаем звук
-                video.muted = true;
-                soundIcon.className = 'fas fa-volume-mute';
-                console.log('🔇 Звук выключен');
-                isMuted = true;
+            player = new YT.Player('youtube-player', {
+                videoId: 'WPxd8Ng9-x0',
+                playerVars: {
+                    autoplay: 1,
+                    loop: 1,
+                    playlist: 'WPxd8Ng9-x0',
+                    controls: 0,
+                    showinfo: 0,
+                    rel: 0,
+                    iv_load_policy: 3,
+                    modestbranding: 1,
+                    fs: 0,
+                    disablekb: 1,
+                    enablejsapi: 1,
+                    mute: 1  // Начинаем с mute
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onError': onPlayerError
+                }
+            });
+            
+            console.log('🎥 Создаем плеер...');
+        }
+        
+        function onPlayerReady(event) {
+            console.log('✅ Плеер готов и работает!');
+            
+            // Пробуем запустить видео
+            try {
+                player.playVideo();
+                player.setVolume(50);
+                console.log('🔊 Громкость установлена на 50%');
+            } catch (e) {
+                console.log('⚠️ Ошибка при настройке:', e);
+            }
+            
+            // Ставим иконку mute
+            soundIcon.className = 'fas fa-volume-mute';
+        }
+        
+        function onPlayerError(event) {
+            console.log('❌ Ошибка плеера:', event.data);
+        }
+        
+        // Обработка нажатия на кнопку
+        soundButton.addEventListener('click', function() {
+            console.log('👆 Кнопка нажата!');
+            
+            if (!player) {
+                console.log('⚠️ Плеер еще не готов');
+                return;
+            }
+            
+            try {
+                if (isMuted) {
+                    // Включаем звук
+                    player.unMute();
+                    player.setVolume(50);
+                    soundIcon.className = 'fas fa-volume-high';
+                    console.log('🔊 Звук ВКЛЮЧЕН');
+                    isMuted = false;
+                } else {
+                    // Выключаем звук
+                    player.mute();
+                    soundIcon.className = 'fas fa-volume-mute';
+                    console.log('🔇 Звук ВЫКЛЮЧЕН');
+                    isMuted = true;
+                }
+            } catch (e) {
+                console.log('❌ Ошибка при переключении звука:', e);
             }
         });
         
-        // Пробуем запустить видео
-        video.play().catch(e => {
-            console.log('⚠️ Автовоспроизведение не сработало, пробуем резервное');
-            video.src = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
-            video.play();
-        });
+        // Проверяем состояние каждую секунду
+        setInterval(() => {
+            if (player && player.getPlayerState) {
+                const state = player.getPlayerState();
+                const isMutedAPI = player.isMuted();
+                
+                // Синхронизируем иконку с реальным состоянием
+                if (isMutedAPI !== isMuted) {
+                    isMuted = isMutedAPI;
+                    soundIcon.className = isMuted ? 'fas fa-volume-mute' : 'fas fa-volume-high';
+                }
+                
+                // Если видео не играет, пробуем запустить
+                if (state !== 1) {  // 1 = воспроизведение
+                    try {
+                        player.playVideo();
+                    } catch (e) {}
+                }
+            }
+        }, 1000);
         
-        console.log('🎬 Скрипт готов');
+        console.log('📱 Скрипт загружен');
     </script>
 </body>
 </html>
