@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои соцсети</title>
+    <!-- Подключаем Font Awesome для красивых иконок соцсетей -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Стили для страницы */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .social-link i {
+            font-size: 1.5rem;
+        }
+
+        /* Индивидуальные цвета соцсетей */
+        .instagram { background: #E4405F; }
+        .telegram { background: #0088cc; }
+        .youtube { background: #FF0000; }
+        .github { background: #333; }
+        .tiktok { background: #000000; }
+        .vkontakte { background: #4C75A3; }
+        .soundcloud { background: #FF7700; }
+
+        footer {
+            margin-top: 2rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Связь</h1>
+        <p>👋</p>
+
+        <div class="social-links">
+           
+            <a href="https://t.me/psychodrain" target="_blank" class="social-link telegram">
+                <i class="fab fa-telegram-plane"></i> Telegram
+            </a>
+            
+            <a href="https://www.youtube.com/@mishanya_atarax" target="_blank" class="social-link youtube">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            
+            <a href="https://tiktok.com/@kaceiiii" target="_blank" class="social-link tiktok">
+                <i class="fab fa-tiktok"></i> TikTok
+            </a>
+            
+            <a href="https://vk.com/gang_tyumen" target="_blank" class="social-link vkontakte">
+                <i class="fab fa-vk"></i> ВКонтакте
+            </a>
+            
+             <a href="https://soundcloud.com/mishanyalirikov" target="_blank" class="social-link soundcloud">
+                <i class="fab fa-soundcloud"></i> SoundCloud
+            </a>
+        </div>
+    </div>
+</body>
+</html>
