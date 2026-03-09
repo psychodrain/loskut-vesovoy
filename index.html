@@ -74,7 +74,7 @@
             border-color: white;
         }
 
-        /* ПАНЕЛЬКА - КАК БЫЛА, НО ТЕКСТ ЧУТЬ МЕНЬШЕ */
+        /* ПАНЕЛЬКА */
         .container {
             background: rgba(10, 10, 15, 0.85);
             backdrop-filter: blur(12px);
@@ -87,7 +87,6 @@
             position: relative;
             z-index: 2;
             
-            /* БЕЛОЕ НЕОНОВОЕ СВЕЧЕНИЕ */
             border: 1.5px solid rgba(255, 255, 255, 0.3);
             box-shadow: 
                 0 0 40px rgba(255, 255, 255, 0.4),
@@ -95,7 +94,6 @@
                 0 0 120px rgba(255, 255, 255, 0.1),
                 inset 0 0 30px rgba(255, 255, 255, 0.2);
             
-            /* Анимация пульсации */
             animation: neonPulse 3s ease-in-out infinite;
         }
 
@@ -119,7 +117,7 @@
         h1 {
             color: white;
             margin-bottom: 1.8rem;
-            font-size: 2.1rem; /* ЧУТЬ МЕНЬШЕ (было 2.2rem) */
+            font-size: 2.1rem;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
             letter-spacing: 1.5px;
             font-weight: 600;
@@ -149,7 +147,6 @@
             backdrop-filter: blur(5px);
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
             
-            /* БЕЛОЕ НЕОНОВОЕ СВЕЧЕНИЕ ДЛЯ КНОПОК */
             box-shadow: 
                 0 0 15px rgba(255, 255, 255, 0.2),
                 0 0 30px rgba(255, 255, 255, 0.1);
@@ -169,7 +166,6 @@
             filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
         }
 
-        /* Индивидуальные цвета соцсетей */
         .telegram { background: linear-gradient(135deg, #0088cc, #006699); }
         .youtube { background: linear-gradient(135deg, #FF0000, #CC0000); }
         .tiktok { background: linear-gradient(135deg, #000000, #1a1a1a); }
@@ -178,12 +174,12 @@
     </style>
 </head>
 <body>
-    <!-- YouTube фон - начинаем с mute: true (звук = 0) -->
+    <!-- YouTube фон -->
     <div class="ytplayer" data-property="{
         videoURL: 'https://www.youtube.com/watch?v=WPxd8Ng9-x0',
         containment: 'body',
         autoPlay: true,
-        mute: true,        /* НАЧИНАЕМ С ВЫКЛЮЧЕННЫМ ЗВУКОМ */
+        mute: true,
         startAt: 0,
         opacity: 1,
         loop: true,
@@ -194,7 +190,7 @@
         optimizeDisplay: true,
         stopMovieOnBlur: false,
         realfullscreen: true,
-        volume: 0           /* ГРОМКОСТЬ 0 */
+        volume: 0
     }"></div>
 
     <!-- Затемняющий слой -->
@@ -205,7 +201,7 @@
         <i class="fas fa-volume-mute" id="soundIcon"></i>
     </button>
 
-    <!-- ПАНЕЛЬКА - КАК БЫЛА -->
+    <!-- ПАНЕЛЬКА -->
     <div class="container">
         <h1>@psychodrain</h1>
 
@@ -213,19 +209,15 @@
             <a href="https://t.me/psychodrain" target="_blank" class="social-link telegram">
                 <i class="fab fa-telegram-plane"></i> Telegram
             </a>
-            
             <a href="https://www.youtube.com/@mishanya_atarax" target="_blank" class="social-link youtube">
                 <i class="fab fa-youtube"></i> YouTube
             </a>
-            
             <a href="https://tiktok.com/@kaceiiii" target="_blank" class="social-link tiktok">
                 <i class="fab fa-tiktok"></i> TikTok
             </a>
-            
             <a href="https://vk.com/gang_tyumen" target="_blank" class="social-link vkontakte">
                 <i class="fab fa-vk"></i> ВКонтакте
             </a>
-            
             <a href="https://soundcloud.com/mishanyalirikov" target="_blank" class="social-link soundcloud">
                 <i class="fab fa-soundcloud"></i> SoundCloud
             </a>
@@ -238,79 +230,100 @@
     
     <script>
         $(document).ready(function() {
+            console.log("📱 Страница загружена, инициализируем плеер...");
+            
             // Активируем YouTube плеер
             $(".ytplayer").YTPlayer();
             
             let player = null;
-            let isMuted = true;      // Начинаем с выключенным звуком
-            let soundEnabled = false; // Звук выключен
-            const TARGET_VOLUME = 50; // Громкость при включении 50%
+            let isMuted = true;
+            let checkCount = 0;
+            const TARGET_VOLUME = 50;
+            const MAX_CHECKS = 30; // Максимум проверок (15 секунд)
             
-            // Ждем загрузки плеера
-            function waitForPlayer() {
+            // Функция проверки готовности плеера
+            function checkPlayerReady() {
+                checkCount++;
                 const ytPlayer = $(".ytplayer").data("ytPlayer");
-                if (ytPlayer && ytPlayer.player) {
+                
+                console.log(`🔍 Проверка ${checkCount}:`, ytPlayer ? "Есть объект" : "Нет объекта");
+                
+                if (ytPlayer && ytPlayer.player && ytPlayer.player.getVolume) {
+                    // Плеер готов!
                     player = ytPlayer.player;
-                    console.log("✅ Player loaded!");
+                    console.log("✅ ПЛЕЕР ГОТОВ!", player);
                     
-                    // Убеждаемся что звук выключен и громкость 0
-                    if (player.setVolume) {
+                    // Настройка начального состояния
+                    try {
                         player.mute();
                         player.setVolume(0);
-                        console.log("🔇 Started muted, volume 0");
+                        console.log("🔇 Звук выключен, громкость 0");
+                        
+                        // Активируем кнопку
+                        initButton();
+                    } catch (e) {
+                        console.log("⚠️ Ошибка настройки:", e);
                     }
                     
-                    initButton();
+                    return true;
+                } else if (checkCount < MAX_CHECKS) {
+                    // Ждем еще
+                    console.log(`⏳ Ждем плеер... (${checkCount}/${MAX_CHECKS})`);
+                    setTimeout(checkPlayerReady, 500);
                 } else {
-                    console.log("⏳ Waiting for player...");
-                    setTimeout(waitForPlayer, 500);
+                    console.log("❌ Таймаут: плеер не загрузился");
+                    // Пробуем переинициализировать
+                    console.log("🔄 Пробуем перезапустить плеер...");
+                    $(".ytplayer").YTPlayer();
+                    checkCount = 0;
+                    setTimeout(checkPlayerReady, 1000);
                 }
             }
             
-            waitForPlayer();
+            // Начинаем проверку через 1 секунду
+            setTimeout(checkPlayerReady, 1000);
             
             function initButton() {
                 const soundToggle = document.getElementById('soundToggle');
                 const soundIcon = document.getElementById('soundIcon');
                 
                 if (!player) {
-                    console.error("❌ Player not found");
+                    console.error("❌ Нет плеера для кнопки");
                     return;
                 }
                 
-                console.log("🎮 Button initialized");
+                console.log("🎮 Кнопка активирована!");
                 
-                // Кнопка mute/unmute с правильной логикой
-                soundToggle.addEventListener('click', function(e) {
+                // Убираем старые обработчики
+                soundToggle.replaceWith(soundToggle.cloneNode(true));
+                const newSoundToggle = document.getElementById('soundToggle');
+                
+                // Добавляем новый обработчик
+                newSoundToggle.addEventListener('click', function(e) {
                     e.preventDefault();
-                    console.log("👆 Button clicked!");
-                    
-                    if (!player) {
-                        console.error("❌ Player not ready");
-                        return;
-                    }
+                    console.log("👆 Кнопка нажата!");
                     
                     try {
                         if (isMuted) {
-                            // ПЕРВОЕ НАЖАТИЕ: включаем звук на 50%
+                            // Включаем звук
                             player.unMute();
                             player.setVolume(TARGET_VOLUME);
                             soundIcon.className = 'fas fa-volume-high';
-                            console.log(`🔊 Sound ON at ${TARGET_VOLUME}%`);
+                            console.log(`🔊 Звук ВКЛЮЧЕН на ${TARGET_VOLUME}%`);
                             isMuted = false;
                         } else {
-                            // ВТОРОЕ НАЖАТИЕ: выключаем звук
+                            // Выключаем звук
                             player.mute();
                             soundIcon.className = 'fas fa-volume-mute';
-                            console.log("🔇 Sound OFF");
+                            console.log("🔇 Звук ВЫКЛЮЧЕН");
                             isMuted = true;
                         }
                     } catch (error) {
-                        console.error("❌ Error:", error);
+                        console.error("❌ Ошибка:", error);
                     }
                 });
                 
-                // Следим за состоянием звука
+                // Следим за состоянием
                 setInterval(() => {
                     if (player) {
                         try {
@@ -319,9 +332,7 @@
                                 isMuted = muted;
                                 soundIcon.className = muted ? 'fas fa-volume-mute' : 'fas fa-volume-high';
                             }
-                        } catch (e) {
-                            // Игнорируем ошибки
-                        }
+                        } catch (e) {}
                     }
                 }, 200);
             }
