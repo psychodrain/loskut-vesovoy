@@ -113,11 +113,22 @@ function renderCategories() {
 }
 
 function filterProducts(category) {
+    const wasOnCatalog = !document.getElementById('page-catalog').classList.contains('page-hidden');
+    
     currentCategory = category;
     renderCategories();
     renderProducts();
-    showPage('catalog');
-    document.querySelector('.section-header')?.scrollIntoView({ behavior: 'smooth' });
+
+    if (wasOnCatalog) {
+        const header = document.querySelector('.section-header');
+        if (header) {
+            setTimeout(() => {
+                header.scrollIntoView({ behavior: 'smooth' });
+            }, 50);
+        }
+    } else {
+        showPage('catalog');
+    }
 }
 
 // ===== PRODUCTS =====
