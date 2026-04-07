@@ -75,13 +75,9 @@ function init() {
     setupPhoneInput();
 }
 
-// ===== NAVIGATION (Для SPA частей, если нужно) =====
+// ===== NAVIGATION =====
 function showPage(pageId) {
-    // Эта функция нужна только если бы мы делали все на одной странице.
-    // Так как у нас отдельные файлы, она может использоваться для внутренних переключений
-    if (pageId === 'catalog') {
-        window.location.href = 'index.html';
-    }
+    if (pageId === 'catalog') window.location.href = 'index.html';
 }
 
 // ===== PRODUCTS LOGIC =====
@@ -98,7 +94,6 @@ function filterProducts(category) {
     renderCategories();
     renderProducts();
     
-    // Плавный скролл к началу каталога
     const header = document.querySelector('.section-header');
     if (header) {
         setTimeout(() => header.scrollIntoView({ behavior: 'smooth' }), 50);
@@ -145,7 +140,7 @@ function openProductModal(productId) {
     if (!currentProduct) return;
 
     const modal = document.getElementById('productModal');
-    if (!modal) return; // Если модалки нет (например, мы не на главной), выходим
+    if (!modal) return;
 
     const isFav = favorites.includes(currentProduct.id);
     
@@ -509,96 +504,48 @@ function submitOrder(event) {
     showToast('Заказ успешно оформлен!');
 }
 
-// ===== ADMIN AUTH & LOGIC =====
-function isAdminLoggedIn() {
-    return sessionStorage.getItem('admin_logged_in') === 'true';
-}
+// ===== ADMIN AUTH (ПРОСТОЙ ВХОД) =====
 
-function openLoginModal() {
-    const modal = document.getElementById('authModal');
-    if (!modal) return;
+// Функция входа (вызывается из модального окна)
+function handleAdminLogin(event) {
+    event.preventDefault();
     
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    
-    const adminData = localStorage.getItem('lv_admin_user');
-    if (!adminData) {
-        toggleAuthMode('register');
-    } else {
-        toggleAuthMode('login');
-    }
-}
+    const loginInput = document.getElementById('loginUsername');
+    const passInput = document.getElementById('loginPassword');
+    const errorMsg = document.getElementById('loginError');
 
-function closeAuthModal() {
-    const modal = document.getElementById('authModal');
-    if (modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-}
+    // НАСТРОЙКИ ДОСТУПА
+    const ADMIN_LOGIN = 'admin';
+    const ADMIN_PASS = 'admin123';
 
-function toggleAuthMode(mode) {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const title = document.getElementById('authTitle');
-
-    if (mode === 'register') {
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        title.textContent = 'Регистрация админа';
-    } else {
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        title.textContent = 'Вход для админа';
-    }
-}
-
-function handleRegister(e) {
-    e.preventDefault();
-    const username = document.getElementById('regUsername').value.trim();
-    const password = document.getElementById('regPassword').value.trim();
-
-    if (username.length < 3 || password.length < 4) {
-        alert('Логин мин. 3 символа, пароль мин. 4 символа');
-        return;
-    }
-
-    localStorage.setItem('lv_admin_user', JSON.stringify({ username, password }));
-    showToast('Аккаунт создан! Теперь войдите.');
-    toggleAuthMode('login');
-}
-
-function handleLogin(e) {
-    e.preventDefault();
-    const username = document.getElementById('loginUsername').value.trim();
-    const password = document.getElementById('loginPassword').value.trim();
-    const storedData = localStorage.getItem('lv_admin_user');
-    
-    if (!storedData) {
-        alert('Администратор не зарегистрирован.');
-        toggleAuthMode('register');
-        return;
-    }
-
-    const admin = JSON.parse(storedData);
-
-    if (username === admin.username && password === admin.password) {
+    if (loginInput.value === ADMIN_LOGIN && passInput.value === ADMIN_PASS) {
+        // Сохраняем флаг входа в сессию
         sessionStorage.setItem('admin_logged_in', 'true');
+        
+        // Закрываем модалку
         closeAuthModal();
         
-        // Если мы на странице админа, показываем контент
-        const adminContent = document.getElementById('adminContent');
-        if (adminContent) {
-            adminContent.style.display = 'block';
-            renderAdminPanel();
-        } else {
-            // Если мы на другой странице, переходим на админку
-            window.location.href = 'admin.html';
-        }
-        showToast('Добро пожаловать!');
+        // Перебрасываем на страницу админки
+        window.location.href = 'admin.html';
     } else {
-        alert('Неверный логин или пароль!');
+        if (errorMsg) {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = 'Неверный логин или пароль';
+        } else {
+            alert('Неверный логин или пароль');
+        }
     }
+}
+
+// Проверка авторизации (для страницы admin.html)
+function checkAdminAuth() {
+    if (sessionStorage.getItem('admin_logged_in') !== 'true') {
+        // Если не вошел - выкидываем на главную или показываем вход
+        // Для простоты - редирект на главную, где можно нажать "Админ"
+        window.location.href = 'index.html';
+        return false;
+    }
+    return true;
 }
 
 function logoutAdmin() {
@@ -606,7 +553,11 @@ function logoutAdmin() {
     window.location.href = 'index.html';
 }
 
+// ===== ADMIN PANEL LOGIC =====
 function renderAdminPanel() {
+    // Сначала проверяем, авторизован ли пользователь
+    if (!checkAdminAuth()) return;
+
     const orders = JSON.parse(localStorage.getItem('lv_orders') || '[]');
     const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
     const newOrders = orders.filter(o => o.status === 'new').length;
