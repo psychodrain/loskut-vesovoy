@@ -20,7 +20,6 @@
         <nav class="nav">
             <a href="index.html" class="nav-link active">Каталог</a>
             <a href="about.html" class="nav-link">О нас</a>
-            <a href="admin.html" class="nav-link">Админ</a>
             <button class="cart-btn" onclick="toggleCart()">
                 Корзина
                 <span class="cart-badge" id="cartBadge" style="display:none">0</span>
@@ -68,22 +67,18 @@
         </div>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">🚚</div>
                 <h3>Быстрая доставка</h3>
                 <p>Отправляем заказы в течение 1-2 рабочих дней по всей России</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">✅</div>
                 <h3>Гарантия качества</h3>
                 <p>Все ткани проходят проверку качества перед отправкой</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">💰</div>
                 <h3>Лучшие цены</h3>
                 <p>Прямые поставки от производителей без посредников</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">💬</div>
                 <h3>Поддержка 24/7</h3>
                 <p>Всегда на связи - поможем с выбором ткани</p>
             </div>
@@ -190,9 +185,34 @@
     </div>
 </div>
 
+<!-- Auth Modal (ВХОД В АДМИНКУ) -->
+<div class="modal-overlay" id="authModal">
+    <div class="modal" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Вход для админа</h3>
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <!-- Форма Входа -->
+            <form id="loginForm" onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Логин</label>
+                    <input type="text" class="form-input" id="loginUsername" required placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" id="loginPassword" required placeholder="admin123">
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Войти</button>
+                <p id="loginError" style="color: var(--danger); font-size: 13px; margin-top: 10px; display: none; text-align: center;">Ошибка входа</p>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Toast Notifications -->
 <div class="toast-container" id="toastContainer"></div>
 
-<script src="js/script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
