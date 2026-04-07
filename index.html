@@ -6,6 +6,7 @@
     <title>Лоскут Весовой — Ткани на любой вкус</title>
     <link href="https://cdn.jsdelivr.net/npm/@fontsource/open-sans@4.5.14/index.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fontsource/montserrat@4.5.14/index.min.css" rel="stylesheet">
+    <!-- ИСПРАВЛЕНО: путь к CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,6 +21,8 @@
         <nav class="nav">
             <a href="index.html" class="nav-link active">Каталог</a>
             <a href="about.html" class="nav-link">О нас</a>
+            <!-- ДОБАВЛЕНО: Кнопка Админ, которая открывает попап -->
+            <button class="nav-link" onclick="openLoginModal()">Админ</button>
             <button class="cart-btn" onclick="toggleCart()">
                 Корзина
                 <span class="cart-badge" id="cartBadge" style="display:none">0</span>
@@ -193,7 +196,6 @@
             <button class="modal-close" onclick="closeAuthModal()">✕</button>
         </div>
         <div class="modal-body">
-            <!-- Форма Входа -->
             <form id="loginForm" onsubmit="handleAdminLogin(event)">
                 <div class="form-group">
                     <label class="form-label">Логин</label>
@@ -213,6 +215,7 @@
 <!-- Toast Notifications -->
 <div class="toast-container" id="toastContainer"></div>
 
+<!-- ИСПРАВЛЕНО: путь к JS -->
 <script src="script.js"></script>
 </body>
 </html>
