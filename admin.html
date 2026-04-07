@@ -116,15 +116,10 @@
         </div>
     </div>
 </div>
-
 <script src="script.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        if (!isAdminLoggedIn()) {
-            openLoginModal();
-        } else {
-            renderAdminPanel();
-        }
+        renderAdminPanel();
     });
 </script>
 </body>
