@@ -10,11 +10,10 @@
 </head>
 <body>
 
-<!-- Header (такой же, как в index.html) -->
 <header class="header" id="header">
     <div class="header-inner">
         <a href="index.html" class="logo">
-            <div class="logo-icon">✂</div>
+            <div class="logo-icon">>✂</div>
             <div class="logo-text">Лоскут <span>Весовой</span></div>
         </a>
         <nav class="nav">
@@ -22,7 +21,7 @@
             <a href="about.html" class="nav-link active">О нас</a>
             <a href="index.html#admin" class="nav-link" id="nav-admin-link">Админ</a>
             <button class="cart-btn" onclick="toggleCart()">
-                🛒 Корзина
+                Корзина
                 <span class="cart-badge" id="cartBadge" style="display:none">0</span>
             </button>
         </nav>
@@ -43,36 +42,37 @@
             
             <div class="about-grid">
                 <div class="about-card">
-                    <h3>🎯 Наша миссия</h3>
+                    <h3>Наша миссия</h3>
                     <p>Сделать качественные ткани доступными для каждого. Мы работаем напрямую с фабриками и предлагаем лучшие цены без потери качества.</p>
                 </div>
                 <div class="about-card">
-                    <h3>🌟 Наши ценности</h3>
+                    <h3>Наши ценности</h3>
                     <p>Качество, честность и забота о клиенте — три столпа нашей работы. Каждая ткань тщательно проверяется перед отправкой.</p>
                 </div>
                 <div class="about-card">
-                    <h3>📦 Как мы работаем</h3>
+                    <h3>Как мы работаем</h3>
                     <p>Вы выбираете ткань, указываете нужный вес в килограммах, оформляете заказ — мы отправляем в течение 1-2 дней.</p>
                 </div>
                 <div class="about-card">
-                    <h3>🌱 Экологичность</h3>
+                    <h3>Экологичность</h3>
                     <p>Мы стараемся минимизировать отходы: продаём ткани на вес, используем перерабатываемую упаковку.</p>
                 </div>
             </div>
 
             <div class="contacts-card">
-                <h3>📞 Контакты</h3>
+                <h3>Контакты</h3>
                 <div class="contacts-grid">
-                    <div><strong>📍 Адрес:</strong> г. Москва, ул. Ткацкая, д. 15</div>
-                    <div><strong>📞 Телефон:</strong> +7 (495) 123-45-67</div>
-                    <div><strong>✉️ Email:</strong> info@loskut-vesovoy.ru</div>
-                    <div><strong>🕐 Режим работы:</strong> Пн-Сб: 9:00 - 20:00</div>
+                    <div><strong>Адрес:</strong> г. Вологда, ул. Мира, д. 12</div>
+                    <div><strong>Телефон:</strong> +7 (953) 123-45-67</div>
+                    <div><strong>Email:</strong> info@loskut-vesovoy.ru</div>
+                    <div><strong>Режим работы:</strong> Пн-Пт: 10:00 - 18:00
+                    Сб-Вс: 10:00 - 16:00</div>
                 </div>
             </div>
 
             <div class="about-stats">
                 <div class="stat-item">
-                    <span class="stat-number">5+</span>
+                    <span class="stat-number">9</span>
                     <span class="stat-label">лет на рынке</span>
                 </div>
                 <div class="stat-item">
@@ -92,7 +92,6 @@
     </section>
 </main>
 
-<!-- Footer (такой же, как в index.html) -->
 <footer class="footer">
     <div class="footer-inner">
         <div class="footer-brand">
@@ -109,24 +108,21 @@
         <div class="footer-col">
             <h4>Информация</h4>
             <a href="about.html" class="active">О нас</a>
-            <a href="#">Доставка</a>
-            <a href="#">Возврат</a>
         </div>
         <div class="footer-col">
             <h4>Контакты</h4>
-            <a>+7 (495) 123-45-67</a>
+            <a>+7 (953) 123-45-67</a>
             <a>info@loskut-vesovoy.ru</a>
-            <a>г. Москва</a>
+            <a>г. Вологда</a>
         </div>
     </div>
-    <div class="footer-bottom">© 2024 Лоскут Весовой. Все права защищены.</div>
+    <div class="footer-bottom">© 2026 Лоскут Весовой. Все права защищены.</div>
 </footer>
 
-<!-- Cart Sidebar (общий для всех страниц) -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
     <div class="cart-header">
-        <h3>🛒 Корзина</h3>
+        <h3>Корзина</h3>
         <button class="cart-close" onclick="toggleCart()">✕</button>
     </div>
     <div class="cart-items" id="cartItems"></div>
@@ -139,18 +135,13 @@
     </div>
 </div>
 
-<!-- Toast Notifications -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script src="js/script.js"></script>
 <script>
-    // Инициализация для страницы О нас
     document.addEventListener('DOMContentLoaded', () => {
-        // Подсветка активной ссылки
         document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
         document.querySelector('a[href="about.html"]')?.classList.add('active');
-        
-        // Инициализация корзины (если функция есть в script.js)
         if (typeof updateCartUI === 'function') {
             updateCartUI();
         }
