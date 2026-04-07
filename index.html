@@ -22,7 +22,7 @@
             <a href="about.html" class="nav-link">О нас</a>
             <button class="nav-link" onclick="showPage('admin')" id="nav-admin">Админ</button>
             <button class="cart-btn" onclick="toggleCart()">
-                🛒 Корзина
+                Корзина
                 <span class="cart-badge" id="cartBadge" style="display:none">0</span>
             </button>
         </nav>
@@ -36,7 +36,6 @@
             <h1>Ткани <span>на вес</span> для ваших идей</h1>
             <p>Качественные ткани от лучших производителей по доступным ценам. Хлопок, лён, шёлк, бархат и многое другое — всё в одном месте.</p>
             <div class="hero-buttons">
-                <button class="btn-primary" onclick="showPage('catalog')">🧵 Перейти в каталог</button>
                 <a href="about.html" class="btn-secondary">О магазине</a>
             </div>
             <div class="hero-stats">
@@ -56,7 +55,7 @@
     <section class="section">
         <div class="section-header">
             <h2>Наш каталог</h2>
-            <p>Выберите ткань для вашего проекта. Все ткани продаются на вес — от 100 грамм.</p>
+            <p>Выберите ткань для вашего проекта. Все ткани продаются на вес - от 100 грамм.</p>
         </div>
         <div class="categories" id="categories"></div>
         <div class="products-grid" id="productsGrid"></div>
@@ -67,10 +66,10 @@
             <p>Мы заботимся о качестве и комфорте наших клиентов</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card"><div class="feature-icon">🚚</div><h3>Быстрая доставка</h3><p>Отправляем заказы в течение 1-2 рабочих дней по всей России</p></div>
-            <div class="feature-card"><div class="feature-icon">✅</div><h3>Гарантия качества</h3><p>Все ткани проходят проверку качества перед отправкой</p></div>
-            <div class="feature-card"><div class="feature-icon">💰</div><h3>Лучшие цены</h3><p>Прямые поставки от производителей без посредников</p></div>
-            <div class="feature-card"><div class="feature-icon">💬</div><h3>Поддержка 24/7</h3><p>Всегда на связи — поможем с выбором ткани</p></div>
+            <div class="feature-card"><div <h3>Быстрая доставка</h3><p>Отправляем заказы в течение 1-2 рабочих дней по всей России</p></div>
+            <div class="feature-card"><div <h3>Гарантия качества</h3><p>Все ткани проходят проверку качества перед отправкой</p></div>
+            <div class="feature-card"><div <h3>Лучшие цены</h3><p>Прямые поставки от производителей без посредников</p></div>
+            <div class="feature-card"><div <h3>Поддержка 24/7</h3><p>Всегда на связи - поможем с выбором ткани</p></div>
         </div>
     </section>
 </div>
@@ -80,27 +79,28 @@
     <section class="section">
         <div class="section-header">
             <h2>О магазине «Лоскут Весовой»</h2>
-            <p>Мы продаём качественные ткани на вес с 2019 года</p>
+            <p>Мы продаём качественные ткани на вес с 2017 года</p>
         </div>
         <div style="max-width: 800px; margin: 0 auto;">
             <img src="https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/1494b6eea-ac2d-4dbd-a300-8e0dd8432d26.png" alt="Магазин" class="about-image">
             <div class="about-grid">
                 <div class="about-card">
-                    <h3>🎯 Наша миссия</h3>
+                    <h3>Наша миссия</h3>
                     <p>Сделать качественные ткани доступными для каждого. Мы работаем напрямую с фабриками и предлагаем лучшие цены без потери качества.</p>
                 </div>
                 <div class="about-card">
-                    <h3>🌟 Наши ценности</h3>
+                    <h3>Наши ценности</h3>
                     <p>Качество, честность и забота о клиенте — три столпа нашей работы. Каждая ткань тщательно проверяется перед отправкой.</p>
                 </div>
             </div>
             <div class="contacts-card">
-                <h3>📞 Контакты</h3>
+                <h3>Контакты</h3>
                 <div class="contacts-grid">
-                    <div>📍 г. Москва, ул. Ткацкая, д. 15</div>
-                    <div>📞 +7 (495) 123-45-67</div>
-                    <div>✉️ info@loskut-vesovoy.ru</div>
-                    <div>🕐 Пн-Сб: 9:00 - 20:00</div>
+                    <div>г. Вологда, ул. Мира, д. 12</div>
+                    <div>+7 (953) 123-45-67</div>
+                    <div>info@loskut-vesovoy.ru</div>
+                    <div>Пн-Пт: 10:00 - 18:00
+                    Сб-Вс: 10:00 - 16:00</div>
                 </div>
             </div>
         </div>
@@ -111,10 +111,10 @@
 <div id="page-admin" class="page-hidden">
     <div class="admin-section visible" id="adminContent">
         <div class="admin-header">
-            <h2>📋 Панель администратора</h2>
+            <h2>Панель администратора</h2>
             <div class="admin-actions">
-                <button class="btn-primary btn-small" onclick="exportOrders()">📥 Экспорт</button>
-                <button class="btn-secondary btn-small danger" onclick="clearAllOrders()">🗑 Очистить</button>
+                <button class="btn-primary btn-small" onclick="exportOrders()">Экспорт</button>
+                <button class="btn-secondary btn-small danger" onclick="clearAllOrders()">Очистить</button>
             </div>
         </div>
         <div class="admin-stats" id="adminStats"></div>
@@ -126,7 +126,6 @@
                 <tbody id="ordersBody"></tbody>
             </table>
             <div class="no-orders" id="noOrders" style="display: none;">
-                <div class="no-orders-icon">📭</div>
                 <h3>Заказов пока нет</h3>
                 <p>Когда клиенты начнут оформлять заказы, они появятся здесь</p>
             </div>
@@ -139,7 +138,7 @@
     <div class="footer-inner">
         <div class="footer-brand">
             <h3>✂ Лоскут Весовой</h3>
-            <p>Качественные ткани на вес для шитья, декора и творчества. Работаем с 2019 года.</p>
+            <p>Качественные ткани на вес для шитья, декора и творчества. Работаем с 2017 года.</p>
         </div>
         <div class="footer-col">
             <h4>Каталог</h4>
@@ -156,19 +155,19 @@
         </div>
         <div class="footer-col">
             <h4>Контакты</h4>
-            <a>+7 (495) 123-45-67</a>
+            <a>+7 (953) 123-45-67</a>
             <a>info@loskut-vesovoy.ru</a>
-            <a>г. Москва</a>
+            <a>г. Вологда</a>
         </div>
     </div>
-    <div class="footer-bottom">© 2024 Лоскут Весовой. Все права защищены.</div>
+    <div class="footer-bottom">© 2026 Лоскут Весовой. Все права защищены.</div>
 </footer>
 
 <!-- Cart Sidebar -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
     <div class="cart-header">
-        <h3>🛒 Корзина</h3>
+        <h3>Корзина</h3>
         <button class="cart-close" onclick="toggleCart()">✕</button>
     </div>
     <div class="cart-items" id="cartItems"></div>
@@ -228,7 +227,7 @@
                     <label class="form-label">Комментарий</label>
                     <textarea class="form-input" id="customerComment" placeholder="Дополнительные пожелания..."></textarea>
                 </div>
-                <button type="submit" class="submit-order-btn">✅ Подтвердить заказ</button>
+                <button type="submit" class="submit-order-btn">Подтвердить заказ</button>
             </form>
         </div>
     </div>
