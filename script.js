@@ -5,7 +5,6 @@ const products = [
       fullDesc: "Этот нежный голубой хлопок — отличный выбор для создания детской одежды, пелёнок и постельного белья.",
       image: "https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/113179300-6f1d-481e-97a2-69c5d976b55f.png",
       gallery: ["https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/113179300-6f1d-481e-97a2-69c5d976b55f.png"],
-      badge: "hit", rating: 4.8, reviews: 124,
       specs: { "Состав": "100% хлопок", "Плотность": "130 г/м²", "Ширина": "150 см" },
       care: ["Стирка при 40°C", "Не отбеливать"]
     },
@@ -14,7 +13,6 @@ const products = [
       fullDesc: "Натуральный лён высшего качества — дышащий, гипоаллергенный и невероятно прочный.",
       image: "https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/192becfc4-eb89-4cb0-af92-988c3c1f3855.png",
       gallery: ["https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/192becfc4-eb89-4cb0-af92-988c3c1f3855.png"],
-      badge: "new", rating: 4.9, reviews: 87,
       specs: { "Состав": "100% лён", "Плотность": "170 г/м²", "Ширина": "140 см" },
       care: ["Стирка при 60°C", "Гладить горячим утюгом"]
     },
@@ -23,7 +21,6 @@ const products = [
       fullDesc: "Роскошный шёлк глубокого бордового цвета с благородным блеском.",
       image: "https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/11058c96f-22a0-439d-9d36-4c94b66c6fcc.png",
       gallery: ["https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/11058c96f-22a0-439d-9d36-4c94b66c6fcc.png"],
-      badge: null, rating: 4.7, reviews: 56,
       specs: { "Состав": "100% шёлк", "Плотность": "80 г/м²", "Ширина": "140 см" },
       care: ["Ручная стирка", "Температура до 30°C"]
     },
@@ -41,7 +38,6 @@ const products = [
       fullDesc: "Солнечный жёлтый хлопок — идеальная основа для пэчворка.",
       image: "https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/189633bff-286e-4432-a1c3-f9885fc41b17.png",
       gallery: ["https://image.qwenlm.ai/public_source/76bb5dd4-4f72-4671-b805-d03a52364dad/189633bff-286e-4432-a1c3-f9885fc41b17.png"],
-      badge: "sale", rating: 4.5, reviews: 98,
       specs: { "Состав": "100% хлопок", "Плотность": "120 г/м²", "Ширина": "110 см" },
       care: ["Стирка при 40°C", "Не отбеливать"]
     }
@@ -55,13 +51,11 @@ const categoryList = [
     { id: 'velvet', name: 'Бархат' }
 ];
 
-// ===== STATE =====
 let cart = JSON.parse(localStorage.getItem('lv_cart') || '[]');
 let currentCategory = 'all';
 let favorites = JSON.parse(localStorage.getItem('lv_favs') || '[]');
 let currentProduct = null;
 
-// ===== INIT =====
 function init() {
     if (!localStorage.getItem('lv_products')) localStorage.setItem('lv_products', JSON.stringify(products));
     if (!localStorage.getItem('lv_orders')) localStorage.setItem('lv_orders', JSON.stringify([]));
@@ -74,7 +68,6 @@ function init() {
     setupPhoneInput();
 }
 
-// ===== PRODUCTS LOGIC =====
 function renderCategories() {
     const container = document.getElementById('categories');
     if (!container) return;
@@ -182,11 +175,9 @@ function addFromModal(btn){if(!currentProduct)return;const w=parseFloat(document
 function switchModalTab(id,btn){document.querySelectorAll('.pd-tab-content').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.pd-tab-header').forEach(h=>h.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');}
 function getStarsHtml(r){const f=Math.floor(r),h=r%1>=0.5?1:0;return'★'.repeat(f)+(h?'½':'')+'☆'.repeat(5-f-h);}
 
-// ===== QUICK ADD & FAVORITES =====
 function quickAddToCart(id,btn){const p=products.find(x=>x.id===id),ex=cart.find(x=>x.id===id);if(ex){ex.qty+=0.5;}else{cart.push({id:p.id,name:p.name,price:p.price,image:p.image,qty:0.5});}saveCart();updateCartUI();showToast(`${p.name} добавлен`);btn.classList.add('added');btn.textContent='✓';setTimeout(()=>{btn.classList.remove('added');btn.textContent='+ В корзину';},1000);}
 function toggleFavorite(id,btn){const i=favorites.indexOf(id);if(i>-1){favorites.splice(i,1);btn.classList.remove('active');btn.innerHTML='🤍';showToast('Удалено из избранного');}else{favorites.push(id);btn.classList.add('active');btn.innerHTML='❤️';showToast('Добавлено в избранное');}localStorage.setItem('lv_favs',JSON.stringify(favorites));}
 
-// ===== CART =====
 function saveCart(){localStorage.setItem('lv_cart',JSON.stringify(cart));}
 function getCartTotal(){return cart.reduce((s,i)=>s+i.price*i.qty,0);}
 function getCartCount(){return cart.reduce((s,i)=>s+i.qty,0);}
@@ -196,20 +187,17 @@ function renderCartItems(){const c=document.getElementById('cartItems'),f=docume
 function removeFromCart(id){cart=cart.filter(i=>i.id!==id);saveCart();updateCartUI();renderCartItems();}
 function updateQty(id,delta){const i=cart.find(x=>x.id===id);if(i){i.qty=Math.max(0.1,parseFloat((i.qty+delta).toFixed(1)));if(i.qty<=0){removeFromCart(id);return;}}saveCart();updateCartUI();renderCartItems();}
 
-// ===== CHECKOUT =====
 function openCheckout(){if(cart.length===0)return;toggleCart();setTimeout(()=>{const s=document.getElementById('orderSummary');if(s){s.innerHTML=`<h4>Ваш заказ:</h4>${cart.map(i=>`<div class="order-summary-item"><span>${i.name} × ${i.qty.toFixed(1)} кг</span><span>${(i.price*i.qty).toLocaleString('ru-RU')} ₽</span></div>`).join('')}<div class="order-summary-total"><span>Итого:</span><span>${getCartTotal().toLocaleString('ru-RU')} ₽</span></div>`;}const m=document.getElementById('checkoutModal');if(m){m.classList.add('open');document.body.style.overflow='hidden';}},200);}
 function closeCheckout(){const m=document.getElementById('checkoutModal');if(m){m.classList.remove('open');document.body.style.overflow='';const f=document.getElementById('orderForm');if(f){f.style.display='';f.reset();}}}
 function submitOrder(e){e.preventDefault();const order={customer:{name:document.getElementById('customerName').value,phone:document.getElementById('customerPhone').value,email:document.getElementById('customerEmail').value,city:document.getElementById('customerCity').value,address:document.getElementById('customerAddress').value,comment:document.getElementById('customerComment').value},items:[...cart],total:getCartTotal()};const orders=JSON.parse(localStorage.getItem('lv_orders')||'[]');order.id=Date.now();order.date=new Date().toLocaleString('ru-RU');order.status='new';orders.unshift(order);localStorage.setItem('lv_orders',JSON.stringify(orders));const b=document.getElementById('checkoutBody');if(b){b.innerHTML=`<div class="success-message"><div class="success-icon">✓</div><h3>Заказ оформлен!</h3><p>Номер заказа: #${order.id.toString().slice(-6)}</p><p style="margin-top:12px;">Мы свяжемся с вами в ближайшее время.</p><button class="btn-primary" style="margin-top:20px;" onclick="closeCheckout();location.reload();">Отлично!</button></div>`;}cart=[];saveCart();updateCartUI();showToast('Заказ успешно оформлен!');}
 
-// ===== ADMIN AUTH (ПРОСТОЙ ВХОД - БЕЗ ПРОВЕРОК) =====
 
 // Закрыть окно входа
 function closeAuthModal(){const m=document.getElementById('authModal');if(m){m.classList.remove('open');document.body.style.overflow='';const li=document.getElementById('loginUsername'),pi=document.getElementById('loginPassword'),err=document.getElementById('loginError');if(li)li.value='';if(pi)pi.value='';if(err)err.style.display='none';}}
 
-// Открыть окно входа
+//окно входа
 function openLoginModal(){const m=document.getElementById('authModal');if(m){m.classList.add('open');document.body.style.overflow='hidden';}}
 
-// Обработка входа - просто проверяет пароль и перекидывает
 function handleAdminLogin(event){
     event.preventDefault();
     const loginInput = document.getElementById('loginUsername');
@@ -226,10 +214,10 @@ function handleAdminLogin(event){
     }
 }
 
-// Выход из админки (просто редирект на главную)
+// Выход из админки 
 function logoutAdmin() { window.location.href = 'index.html'; }
 
-// ===== ADMIN PANEL LOGIC (БЕЗ ПРОВЕРКИ АВТОРИЗАЦИИ) =====
+// админка
 function renderAdminPanel() {
     const orders = JSON.parse(localStorage.getItem('lv_orders') || '[]');
     const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
@@ -273,14 +261,11 @@ function renderAdminPanel() {
 
 function updateOrderStatus(id, status) { const orders = JSON.parse(localStorage.getItem('lv_orders') || '[]'); const order = orders.find(o => o.id === id); if (order) { order.status = status; localStorage.setItem('lv_orders', JSON.stringify(orders)); showToast('Статус обновлен'); } }
 function deleteOrder(id) { let orders = JSON.parse(localStorage.getItem('lv_orders') || '[]'); orders = orders.filter(o => o.id !== id); localStorage.setItem('lv_orders', JSON.stringify(orders)); renderAdminPanel(); showToast('Заказ удалён'); }
-function exportOrders() { const orders = JSON.parse(localStorage.getItem('lv_orders') || '[]'); if (orders.length === 0) { showToast('Нет заказов для экспорта'); return; } let csv = 'Номер,Дата,Имя,Телефон,Город,Товары,Сумма,Статус\n'; orders.forEach(order => { const itemsText = order.items.map(i => `${i.name} (${i.qty.toFixed(1)}кг)`).join('; '); const statusText = { 'new': 'Новый', 'processing': 'В обработке', 'completed': 'Завершён' }[order.status]; csv += `#${order.id.toString().slice(-6)},${order.date},"${order.customer.name}","${order.customer.phone}","${order.customer.city}","${itemsText}",${order.total},${statusText}\n`; }); const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `orders_${new Date().toISOString().slice(0,10)}.csv`; a.click(); showToast('Заказы экспортированы'); }
 function clearAllOrders() { if (confirm('Удалить ВСЕ заказы?')) { localStorage.setItem('lv_orders', JSON.stringify([])); renderAdminPanel(); showToast('Все заказы удалены'); } }
 
-// ===== UTILS =====
 function showToast(message) { const c = document.getElementById('toastContainer'); if (!c) return; const t = document.createElement('div'); t.className = 'toast'; t.textContent = message; c.appendChild(t); setTimeout(() => t.remove(), 3000); }
 function setupPhoneInput() { const p = document.getElementById('customerPhone'); if (p) { p.addEventListener('input', function(e) { let v = e.target.value.replace(/\D/g, ''); if (v.length > 0) { if (v[0] === '7' || v[0] === '8') v = v.substring(1); let f = '+7'; if (v.length > 0) f += ' (' + v.substring(0, 3); if (v.length >= 3) f += ') ' + v.substring(3, 6); if (v.length >= 6) f += '-' + v.substring(6, 8); if (v.length >= 8) f += '-' + v.substring(8, 10); e.target.value = f; } }); } }
 
-// ===== START =====
 document.addEventListener('DOMContentLoaded', init);
 document.addEventListener('click', (e) => { if (e.target.id === 'productModal') closeProductModal(); if (e.target.id === 'checkoutModal') closeCheckout(); if (e.target.id === 'authModal') closeAuthModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeProductModal(); closeCheckout(); closeAuthModal(); if (document.getElementById('cartSidebar')?.classList.contains('open')) toggleCart(); } });
