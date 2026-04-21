@@ -10,7 +10,6 @@
 </head>
 <body>
 
-<!-- Header (без кнопки Админ) -->
 <header class="header" id="header">
     <div class="header-inner">
         <a href="#" class="logo" onclick="showPage('catalog')">
@@ -29,7 +28,6 @@
     </div>
 </header>
 
-<!-- Hero -->
 <section class="hero" id="hero-section">
     <div class="hero-inner">
         <div class="hero-content">
@@ -87,7 +85,6 @@
     </section>
 </div>
 
-<!-- Footer (ссылка Админ-панель теперь открывает попап) -->
 <footer class="footer" id="footer">
     <div class="footer-inner">
         <div class="footer-brand">
@@ -104,7 +101,6 @@
         <div class="footer-col">
             <h4>Информация</h4>
             <a href="about.html">О нас</a>
-            <!-- ИСПРАВЛЕНО: ссылка теперь открывает попап входа -->
             <a onclick="openLoginModal(); return false;">Админ-панель</a>
         </div>
         <div class="footer-col">
@@ -117,7 +113,6 @@
     <div class="footer-bottom">© 2026 Лоскут Весовой. Все права защищены.</div>
 </footer>
 
-<!-- Cart Sidebar -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
     <div class="cart-header">
@@ -134,7 +129,6 @@
     </div>
 </div>
 
-<!-- Product Popup Modal -->
 <div class="modal-overlay" id="productModal">
     <div class="modal modal-product">
         <div class="modal-header">
@@ -145,7 +139,6 @@
     </div>
 </div>
 
-<!-- Checkout Modal -->
 <div class="modal-overlay" id="checkoutModal">
     <div class="modal">
         <div class="modal-header">
