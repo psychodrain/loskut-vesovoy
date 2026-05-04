@@ -90,7 +90,7 @@ let favorites = Storage.get(CONFIG.STORAGE.FAVS, []);
 let currentCategory = 'all';
 let currentProduct = null;
 
-// ===== ИНИЦИАЛИЗАЦИЯ =====
+// ИНИЦИАЛИЗАЦИЯ
 function init() {
     if (!localStorage.getItem(CONFIG.STORAGE.PRODUCTS)) {
         Storage.set(CONFIG.STORAGE.PRODUCTS, products);
