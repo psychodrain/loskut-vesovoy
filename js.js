@@ -102,7 +102,7 @@ function init() {
     if (DOM.get('productsGrid')) {
         renderCategories();
         renderProducts();
-        setupEventDelegation(); // ← новое: делегирование событий
+        setupEventDelegation();
     }
     updateCartUI();
     setupPhoneInput();
