@@ -108,7 +108,7 @@ function init() {
     setupPhoneInput();
 }
 
-// ===== КАТЕГОРИИ =====
+// категории
 function renderCategories() {
     const container = DOM.get('categories');
     if (!container) return;
@@ -126,7 +126,7 @@ function filterProducts(category) {
     if (header) setTimeout(() => header.scrollIntoView({ behavior: 'smooth' }), 50);
 }
 
-// ===== РЕНДЕР ТОВАРОВ =====
+// рендер товаров
 function renderProductCard(product) {
     const badgeHtml = product.badge 
         ? `<span class="product-badge badge-${product.badge}">${getBadgeText(product.badge)}</span>` 
