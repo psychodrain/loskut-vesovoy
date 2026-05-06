@@ -12,7 +12,7 @@ const CONFIG = {
     ADMIN: { LOGIN: 'admin', PASS: 'admin123' }
 };
 
-// ===== ХЕЛПЕРЫ =====
+//ХЕЛПЕРЫ
 const Storage = {
     get(key, fallback = null) {
         try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
@@ -32,7 +32,7 @@ const DOM = {
 const formatPrice = (price) => price.toLocaleString('ru-RU') + ' ₽';
 const formatWeight = (w) => parseFloat(w.toFixed(1));
 
-// ===== ДАННЫЕ =====
+// ДАННЫЕ
 const products = [
     { id: 1, name: "Хлопок голубой", category: "cotton", categoryName: "Хлопок", price: 450, unit: "руб/кг",
       desc: "Мягкий натуральный хлопок, идеален для детской одежды",
@@ -196,7 +196,7 @@ function setupEventDelegation() {
     });
 }
 
-// ===== КОРЗИНА =====
+// кОРЗИНА
 function addToCart(product, qty = CONFIG.WEIGHT.DEFAULT) {
     const existing = cart.find(item => item.id === product.id);
     if (existing) {
@@ -230,7 +230,7 @@ function quickAddToCart(id, btn) {
     }, 1000);
 }
 
-// ===== МОДАЛКА ТОВАРА =====
+//  МОДАЛКА ТОВАРА
 function openProductModal(productId) {
     currentProduct = products.find(p => p.id === productId);
     if (!currentProduct) return;
@@ -417,7 +417,7 @@ function updateModalWeightTotal() {
     }
 }
 
-// ===== МОДАЛКИ: общие функции =====
+
 function openModal(modalId) {
     const modal = DOM.get(modalId);
     if (modal) {
@@ -439,7 +439,7 @@ function closeProductModal() { closeModal('productModal'); }
 function closeCheckout() { closeModal('checkoutModal'); }
 function closeAuthModal() { closeModal('authModal'); }
 
-// ===== ИЗБРАННОЕ =====
+// ИЗБРАННОЕ
 function toggleFavorite(id, btn) {
     const index = favorites.indexOf(id);
     if (index > -1) {
@@ -456,7 +456,7 @@ function toggleFavorite(id, btn) {
     Storage.set(CONFIG.STORAGE.FAVS, favorites);
 }
 
-// ===== КОРЗИНА: утилиты =====
+//КОРЗИНА
 function saveCart() { Storage.set(CONFIG.STORAGE.CART, cart); }
 function getCartTotal() { return cart.reduce((sum, item) => sum + item.price * item.qty, 0); }
 function getCartCount() { return cart.reduce((sum, item) => sum + item.qty, 0); }
@@ -568,7 +568,7 @@ function updateQty(id, delta) {
     renderCartItems();
 }
 
-// ===== ОФОРМЛЕНИЕ ЗАКАЗА =====
+//ОФОРМЛЕНИЕ ЗАКАЗА
 function openCheckout() {
     if (cart.length === 0) return;
     toggleCart();
@@ -660,7 +660,7 @@ function handleAdminLogin(event) {
 
 function logoutAdmin() { window.location.href = 'index.html'; }
 
-// ===== АДМИН-ПАНЕЛЬ =====
+// АДМИН-ПАНЕЛЬ
 function renderAdminPanel() {
     const orders = Storage.get(CONFIG.STORAGE.ORDERS, []);
     const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
@@ -752,7 +752,7 @@ function clearAllOrders() {
     }
 }
 
-// ===== УТИЛИТЫ =====
+//  УТИЛИТЫ
 function showToast(message) {
     const container = DOM.get('toastContainer');
     if (!container) return;
@@ -786,7 +786,6 @@ function setupPhoneInput() {
     }
 }
 
-// ===== ГЛОБАЛЬНЫЕ ОБРАБОТЧИКИ =====
 document.addEventListener('DOMContentLoaded', init);
 
 document.addEventListener('click', (e) => {
