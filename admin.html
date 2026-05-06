@@ -17,6 +17,10 @@
             <div class="logo-text">Лоскут <span>Весовой</span></div>
         </a>
         <nav class="nav">
+             <div class="admin-actions">
+                <button class="btn-secondary btn-small" onclick="logoutAdmin()" style="border-color: var(--danger); color: var(--danger);">Выйти</button>
+                <button class="btn-secondary btn-small danger" onclick="clearAllOrders()">Очистить базу</button>
+            </div>
             <a href="index.html" class="nav-link">Каталог</a>
             <a href="about.html" class="nav-link">О нас</a>
 
@@ -32,10 +36,7 @@
     <div class="admin-section visible" id="adminContent">
         <div class="admin-header">
             <h2>Панель администратора</h2>
-            <div class="admin-actions">
-                <button class="btn-secondary btn-small" onclick="logoutAdmin()" style="border-color: var(--danger); color: var(--danger);">Выйти</button>
-                <button class="btn-secondary btn-small danger" onclick="clearAllOrders()">Очистить базу</button>
-            </div>
+           
         </div>
         
         <div class="admin-stats" id="adminStats">
